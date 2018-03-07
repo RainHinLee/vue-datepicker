@@ -640,6 +640,7 @@ exports.default = {
       }
       if (!obj.inMonth) {
         this.nextMonth(obj.action);
+        return
       }
       if (this.option.type === 'day' || this.option.type === 'min') {
         this.dayList.forEach(function (x) {
