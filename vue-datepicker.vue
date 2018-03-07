@@ -658,7 +658,7 @@ exports.default = {
         } else {
           this.selectedDays.push(ctime);
           obj.checked = true;
-          this.$emit('days',ctime,obj,selectedDays);
+          this.$emit('days',ctime,obj,this.selectedDays);
         }
       }
       switch (this.option.type) {
