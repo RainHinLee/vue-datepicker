@@ -1,4 +1,4 @@
-# vue-datepicker
+# h-datepicker
 calendar and datepicker component with material design for Vue.js
 
 # Demo
@@ -9,7 +9,7 @@ The demo page is [HERE](http://hilongjw.github.io/vue-datepicker/demo.html).
 
 # Requirements
 
-- [Vue.js](https://github.com/yyx990803/vue) `^1.0.0` & `^2.0.0`
+- [Vue.js](https://github.com/yyx990803/vue)  `^2.0.0`
 - [moment](https://github.com/moment/moment) `^2.11.1`
 
 # Installation
@@ -17,18 +17,15 @@ The demo page is [HERE](http://hilongjw.github.io/vue-datepicker/demo.html).
 ## npm
 
 ```shell
-$ npm install vue-datepicker
+$ npm install h-datepicker
 ```
 
 # Usage
 
 ```html
 <script>
-// for Vue 1.0
-import myDatepicker from 'vue-datepicker/vue-datepicker-1.vue'
 
-// for Vue 2.0
-import myDatepicker from 'vue-datepicker'
+import myDatepicker from 'h-datepicker'
 
 export default {
   data () {
@@ -235,27 +232,29 @@ limit:{
 
 ### prop
 
-* Vue 1.0
-
-```javascript
-
-time: '' // string
-
-```
-
-```html
-
-<date-picker :time.sync="time" :limit="limit"></date-picker>
-
-```
-
-* Vue 2.0
 
 ```javascript
 date: {
   time: '' // string
 }
 ```
+
+### events
+	
+```javascript
+	
+	@days=(citme,obj,days)=>{
+		if(ctime != stime){
+			obj.checked = false  //--在外部控制内部选择项
+			let index = this.days.find(item=>item==ctime);
+			this.$delete(days,index);
+		}
+	}
+	
+```	
+	
+	days:add 
+		type = 'multi-day' 
 
 ```html
 

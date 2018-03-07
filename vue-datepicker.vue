@@ -653,10 +653,12 @@ exports.default = {
         if (obj.checked === true) {
           obj.checked = false;
           var index = this.selectedDays.indexOf(ctime)
-          this.selectedDays.splice(index, 1)
+          this.selectedDays.splice(index, 1);
+
         } else {
           this.selectedDays.push(ctime);
           obj.checked = true;
+          this.$emit('days',ctime,obj,selectedDays);
         }
       }
       switch (this.option.type) {
