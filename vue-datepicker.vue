@@ -334,7 +334,8 @@ table {
                 <li v-for="weekie in library.week">{{weekie}}</li>
               </ul>
             </div>
-            <div class="day" v-for="day in dayList" track-by="$index" @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}" :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
+            
+            <div class="day" v-for="(day,index) in dayList"  @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}" :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
           </div>
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.year">
@@ -391,6 +392,12 @@ exports.default = {
       type: Object,
       required: true
     },
+    
+    diss:{
+    	type:Array,
+    	default:()=>[]
+    },
+    
     option: {
       type: Object,
       default: function _default() {
@@ -592,7 +599,14 @@ exports.default = {
           moment: (0, _moment2.default)(currentMoment).add(1, 'months').date(_i2)
         };
         days.push(_passiveDay);
-      }
+      };
+      
+      //---增加一个diss数组，禁止选择
+      days.forEach(item=>{
+      	if(this.diss.indexOf(item.value)>=0){
+      		item['unavailable'] = true;
+      	}
+      });
       this.dayList = days;
     },
     checkBySelectDays: function checkBySelectDays(d, days) {
@@ -659,7 +673,6 @@ exports.default = {
         } else {
           this.selectedDays.push(ctime);
           obj.checked = true;
-          this.$emit('days',ctime,obj,this.selectedDays);
         }
       }
       switch (this.option.type) {

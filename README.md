@@ -229,6 +229,14 @@ limit:{
 }
 
 ```
+```
+ * diss
+
+```javascript
+
+diss:[1,10,16]
+
+```
 
 ### prop
 
@@ -238,23 +246,6 @@ date: {
   time: '' // string
 }
 ```
-
-### events
-	
-```javascript
-	
-	@days=(citme,obj,days)=>{
-		if(ctime != stime){
-			obj.checked = false  //--在外部控制内部选择项
-			let index = this.days.find(item=>item==ctime);
-			this.$delete(days,index);
-		}
-	}
-	
-```	
-	
-	days:add 
-		type = 'multi-day' 
 
 ```html
 
