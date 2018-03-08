@@ -774,14 +774,15 @@ exports.default = {
         if (this.option.type === 'day' || this.option.type === 'min') {
           this.checked.oldtime = this.date.time;
           this.showDay(this.date.time);
-        } else {
-          this.selectedDays = JSON.parse(this.date.time);
-          if (this.selectedDays.length) {
-            this.checked.oldtime = this.selectedDays[0];
-            this.showDay(this.selectedDays[0]);
-          } else {
-            this.showDay();
-          }
+        } else { 	
+          this.selectedDays = [];
+          
+          if(this.date.time){
+          	this.checked.oldtime = '';
+          	this.showDay(this.date.time);
+          }else{
+          	this.showDay();
+          };
         }
       }
       this.showInfo.check = true;
@@ -826,11 +827,6 @@ exports.default = {
       }
       this.showInfo.check = false;
       this.$emit('change', this.date.time);
-      
-      if(this.option.type=="multi-day" && this.reset){ // -复位
-				this.date.time = '';
-				this.selectedDays = [];
-      };
     },
     dismiss: function dismiss(evt) {
       if (evt.target.className === 'datepicker-overlay') {
