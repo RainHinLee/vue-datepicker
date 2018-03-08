@@ -238,6 +238,14 @@ diss:[1,10,16]
 
 ```
 
+ * reset,当type=='multi-day'时，点击确认按钮后，已选择项进行复位
+
+```javascript
+
+reset:true
+
+```
+
 ### prop
 
 

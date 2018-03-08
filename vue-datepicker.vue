@@ -335,7 +335,7 @@ table {
               </ul>
             </div>
             
-            <div class="day" v-for="(day,index) in dayList"  @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}" :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
+            <div class="day" v-for="day in dayList"  @click="checkDay(day)" :class="{'checked':day.checked,'unavailable':day.unavailable,'passive-day': !(day.inMonth)}" :style="day.checked ? (option.color && option.color.checkedDay ? { background: option.color.checkedDay } : { background: '#F50057' }) : {}">{{day.value}}</div>
           </div>
         </div>
         <div class="cov-date-box list-box" v-if="showInfo.year">
@@ -396,6 +396,11 @@ exports.default = {
     diss:{
     	type:Array,
     	default:()=>[]
+    },
+    
+    reset:{  //--是否重置，主要用于mutil-day中的多个选择,点击确认按钮后复位
+    	type: Boolean,
+    	default: false
     },
     
     option: {
@@ -603,7 +608,7 @@ exports.default = {
       
       //---增加一个diss数组，禁止选择
       days.forEach(item=>{
-      	if(this.diss.indexOf(item.value)>=0){
+      	if(item.inMonth && this.diss.indexOf(item.value)>=0){
       		item['unavailable'] = true;
       	}
       });
@@ -669,7 +674,6 @@ exports.default = {
           obj.checked = false;
           var index = this.selectedDays.indexOf(ctime)
           this.selectedDays.splice(index, 1);
-
         } else {
           this.selectedDays.push(ctime);
           obj.checked = true;
@@ -817,11 +821,16 @@ exports.default = {
         var ctime = this.checked.year + '-' + this.checked.month + '-' + this.checked.day + ' ' + this.checked.hour + ':' + this.checked.min;
         this.checked.currentMoment = (0, _moment2.default)(ctime, 'YYYY-MM-DD HH:mm');
         this.date.time = (0, _moment2.default)(this.checked.currentMoment).format(this.option.format);
-      } else {
+      } else { //---
         this.date.time = JSON.stringify(this.selectedDays);
       }
       this.showInfo.check = false;
       this.$emit('change', this.date.time);
+      
+      if(this.option.type=="multi-day" && this.reset){ // -复位
+				this.date.time = '';
+				this.selectedDays = [];
+      };
     },
     dismiss: function dismiss(evt) {
       if (evt.target.className === 'datepicker-overlay') {
@@ -841,6 +850,6 @@ exports.default = {
         document.querySelector('.min-box').scrollTop = (document.querySelector('.min-item.active').offsetTop || 0) - 250;
       });
     }
-  }
+  },
 };
 </script>
